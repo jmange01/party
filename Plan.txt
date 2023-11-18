@@ -1,0 +1,30 @@
+Goal:
+- A web app that allows people who love games to connect with others like them. 
+  Focus on meeting new people and encouraging in-person connection.
+
+User Stories:
+
+- Opening an account
+
+- Creating a profile (questionnaire?)
+    Sign up with email & PW -> select UserName -> Enter location -> Select interests
+
+- Logging into account
+    authenticate -> Verify sign up complete -> Drop into sign up flow if necessary -> Land on main page (parties?)
+
+- Updating profile
+    add interests, change location, change UserName(?)
+
+- Finding a group
+
+- Starting a group
+
+- Joining a group
+
+- Inviting new members
+
+- Chatting with a group
+
+- View joined groups
+
+- Leaving a group

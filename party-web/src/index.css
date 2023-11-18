@@ -1,0 +1,108 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+#login-box {
+  background-color: blueviolet;
+  margin: auto;
+  padding: 100px 30px 70px 30px;
+}
+
+.form-field {
+  display: block;
+  margin: auto
+}
+
+
+.sidenav {
+  background-color: aquamarine;
+  height: 100%;
+  position: fixed;
+  transition: width 0.5s;
+}
+
+.sidenav.hidden {
+  width: 2%;
+
+  .link {
+    visibility: hidden;
+  }
+}
+
+.sidenav.visible {
+  width: 15%;
+
+  .link {
+    visibility: visible;
+    transition-delay: 0.3s;
+  }
+}
+
+#sidenav-toggle {
+  float: right;
+  display: block;
+}
+
+#home {
+  margin-left: 5%;
+  background-color: thistle;
+}
+
+#main {
+  width: 100%
+}
+
+#login-box {
+  margin: auto;
+  width: 20%;
+}
+
+.party-row {
+  background-color: aquamarine;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 3px;
+  width: 300px;
+  padding: 20px 10px 0px 10px;
+  border: 2px inset lightcyan;
+}
+
+.party-header {
+  margin: auto auto 5px auto;
+  width: fit-content;
+}
+
+.party-header .party-size {
+  width: fit-content;
+  margin: auto;
+}
+
+.party-header .party-name {
+  margin: auto;
+}
+
+.meeting-schedule {
+  margin: auto;
+  font-size: small;
+  width: 100%;
+}
+
+.meeting-schedule .next-meeting {
+  text-align: left;
+  float: left;
+}
+
+.meeting-schedule .last-meeting {
+  text-align: right;
+  float: right;
+}
