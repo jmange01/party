@@ -14,14 +14,13 @@ export function SignupForm(props) {
         onChangeCallback={setPassword}
       />
       <SubmitButton
-        onClickCallback={() => signUp(email, password, props.submitCallback)}
+        onClickCallback={() => signUp(email, password, () => props.submitCallback({ email: email, password: password }))}
       />
     </form>
   )
 }
 
 function signUp(email, password, submitCallback) {
-  // alert(`you signed up, ${userName}!`);
   // save credentials
   submitCallback(email, password);
 }
@@ -33,6 +32,9 @@ export function UserNameForm(props) {
     <div id="user-name-input">
       <UserNameField
         onChangeCallback={setUserName}
+      />
+      <SubmitButton
+        onClickCallback={() => props.submitCallback({ userName: userName })}
       />
     </div>
   )

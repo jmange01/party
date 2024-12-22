@@ -1,44 +1,78 @@
 import { useState } from 'react';
 import { EmailField, PassField, SubmitButton, UserNameField } from '../components/form';
 import { ProfileForm, SignupForm, UserNameForm } from "../components/signup";
+import { useNavigate } from 'react-router-dom';
+import { authenticate } from '../lib/services/auth';
 
 export default function Signup(props) {
-  const flow = signupFlow(() => { })
-  const step = flow.getNextStep(flow.steps.userNameStep)
+  const [flowState, setFlowState] = useState({})
+  const flow = new Flow(setFlowState);
+  const nav = useNavigate()
 
   return <div>
-    <flow.steps.start.screen
-      loginCallback={props.loginCallback}
-    />
+    { flow.enter(flowState, () => loginAndRedirect({email: flowState.email, password: flowState.password}, nav)) }
   </div>
 }
 
-function userNameStep() {
-  return <SignupForm
-
-  />
+function loginAndRedirect(credentials, redirect) {
+  authenticate(credentials)
+  redirect()
 }
 
-function signupFlow(completionCallback) {
-  return {
-    steps: {
-      start: {
-        screen: SignupForm,
-        transition: "userNameStep"
-      },
-      userNameStep: {
-        screen: UserNameForm,
-        transition: "profileStep"
-      },
-      profileStep: {
-        screen: ProfileForm,
-        transition: "end"
-      }
-    },
+class Flow {
+  flow
+  currentStep
+  setFlowState
 
-    getNextStep: function (step) {
-      return this.steps[step.transition]
+  credentialsStep = { 
+      component: SignupForm,
+      isComplete: (flowState) => {
+        return flowState.email
+      },
+  }
+
+  userNameStep = {
+    component: UserNameForm,
+    isComplete: (flowState) => {
+      return flowState.userName
     }
   }
-}
 
+  constructor(setFlowState) {
+    this.addStep(this.credentialsStep)
+    this.addStep(this.userNameStep)
+
+    this.currentStep = this.flow.start
+    this.setFlowState = setFlowState
+  }
+
+  addStep(step) {
+    if(this.flow) {
+      this.flow.last.next = step;
+      this.flow.last = step;
+    } else {
+      this.flow = {};
+      this.flow.start = step;
+      this.flow.last = step;
+    }
+  }
+
+  getIncompleteStep(flowState) {
+    while(this.currentStep && this.currentStep.isComplete(flowState)) {
+      this.currentStep = this.currentStep.next
+    }
+
+    return this.currentStep
+  }
+
+  enter(flowState, completeCallback) {
+    const current = this.getIncompleteStep(flowState)
+
+    if(!current) {
+      completeCallback()
+      return <div></div>
+    }
+
+    return <this.currentStep.component submitCallback={ (state) => this.setFlowState({ ...flowState, ...state, }) }/>
+  }
+}
